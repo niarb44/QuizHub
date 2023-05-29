@@ -5,31 +5,42 @@ import java.util.List;
 import java.util.Scanner;
 
 public class QuizApplication {
+    private List<Question> questions;
+    private int score;
 
-    public static void main(String[] args){
-        Scanner scanner = new Scanner(System.in);
+    public QuizApplication(){
+        questions = new ArrayList<>();
+        score = 0;
+    }
 
-        List<Question> questions = new ArrayList<>();
-        questions.add(new Question("What is the capital city of France?", "Paris"));
-        questions.add(new Question("What is 2+2", "4"));
+    public void addQuestion(Question question){
+        questions.add(question);
+    }
 
-        int score = 0;
+public void runQuiz(){
+    Scanner scanner = new Scanner(System.in);
 
-        for (Question question : questions) {
-            System.out.println(question.getQuestion());
-            String userAnswer = scanner.nextLine();
+    for(Question question : questions){
+        System.out.println(question.getQuestion());
+        String userAnswer = scanner.nextLine();
 
-            if(userAnswer.equalsIgnoreCase(question.getAnswer())){
-                System.out.println("Correct answer!");
-                score++;
-            }
-            else{
-                System.out.println("Wrong answer.");
-            }
+        if(userAnswer.equals(question.getAnswer())){
+            System.out.println("Correct answer!");
+            score++;
+        } else{
+            System.out.println("Wrong answer!");
         }
+    }
 
-        System.out.println("Your score: "+score+"/"+questions.size());
+    System.out.println("Quiz finished. Your score is: " + score + "/" + questions.size());
+    }
 
+    public static void main(String[] args) {
+        QuizApplication quizApp = new QuizApplication();
+        quizApp.addQuestion(new Question("What is the capital of France?", "Paris"));
+        quizApp.addQuestion(new Question("What is 2 + 2?", "4"));
+
+        quizApp.runQuiz();
     }
 
 }
